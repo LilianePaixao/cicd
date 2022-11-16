@@ -1,0 +1,22 @@
+name: "CI (Integração Contínua): Primeira Action"
+
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  # Ativa este fluxo de trabalho para cada push ou pull que acontecer apontando para branch master
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+# Definindo o que queremos executar
+jobs:
+  exemplo: # Job: exemplo
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+          run: echo Hello, world!
+
