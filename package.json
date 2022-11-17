@@ -1,5 +1,6 @@
 {
   "name": "cicd",
+  "type": "module",
   "version": "1.0.0",
   "main": "index.js",
   "author": "LilianePaixao <liliane.paixao@mmda.com.br>",
@@ -9,6 +10,7 @@
     "next": "^13.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+    
   },
   "scripts": {
     "dev": "next dev",
@@ -16,7 +18,9 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "deploy:prod": "yarn build && vercel ./build --confirm --no-clipboard --token=$VERCEL_TOKEN --prod"
+    "deploy:prod": "yarn deploy:stagging --prod",
+    "deploy:stagging": "yarn build && vercel ./build --confirm --no-clipboard --token=$VERCEL_TOKEN",
+    "deploy:preview": "node ./scripts/pullRequestPreview.js"
   },
   "devDependencies": {
     "eslint": "8.27.0",

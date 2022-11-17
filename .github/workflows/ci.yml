@@ -1,5 +1,11 @@
 name: "CI (Integração Contínua): Primeira Action"
 
+env:
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   # Ativa este fluxo de trabalho para cada push ou pull que acontecer apontando para branch master
@@ -18,6 +24,16 @@ jobs:
         run: yarn install
       - name: Run linter
         run: yarn lint
+
+  preview: # Job: exemplo
+      runs-on: ubuntu-latest
+      steps: 
+        - uses: actions/checkout@v3
+        - name: Run Installation
+          run: yarn install
+        - name: Run Preview Deployment
+          run: yarn deploy:preview
+
 
     
 
