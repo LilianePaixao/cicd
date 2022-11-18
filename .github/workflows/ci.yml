@@ -1,0 +1,55 @@
+name: "CI (Integração Contínua): Primeira Action"
+
+env:
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_PR_NUMBER: ${{ github.event.pull_request.number }}
+
+
+
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  # Ativa este fluxo de trabalho para cada push ou pull que acontecer apontando para branch master
+  pull_request:
+    types: [ opened, synchronize ]
+
+# Definindo o que queremos executar
+jobs:
+  linter: # Job1
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      # Runs install command 
+      - name: Run Installation
+        run: yarn install
+      - name: Run linter
+        run: yarn lint
+
+  preview: # Job2
+      runs-on: ubuntu-latest
+      steps: 
+        - uses: actions/checkout@v3
+        - name: Run Installation
+          run: yarn install
+        - name: Run Preview Deployment
+          run: yarn deploy:preview
+  test_e2e: # Job3
+        runs-on: ubuntu-latest
+        steps: 
+          - uses: actions/checkout@v3
+          - uses: actions/setup-node@v3
+            with:
+              node-version: 19.0.0
+              cache: 'yarn'
+          - name: Cypress
+            uses: cypress-io/github-action@v4
+            with: 
+              browser: chrome
+          
+
+
+    
+

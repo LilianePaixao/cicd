@@ -1,18 +1,34 @@
 {
   "name": "cicd",
+  "type": "module",
   "version": "1.0.0",
   "main": "index.js",
   "author": "LilianePaixao <liliane.paixao@mmda.com.br>",
   "license": "MIT",
   "dependencies": {
+    "eslint-plugin-prettier": "^4.2.1",
     "next": "^13.0.3",
+    "node-fetch": "^3.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "scripts":{
+  "scripts": {
     "dev": "next dev",
-    "build": "rm -rf build && next export && mv ./out ./build",
+    "build": "rm -rf build && next build && next export && mv ./out ./build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "deploy:prod": "yarn deploy:stagging --prod",
+    "deploy:stagging": "yarn build && vercel ./build --confirm --no-clipboard --token=$VERCEL_TOKEN",
+    "deploy:preview": "node ./scripts/pullRequestPreview.js",
+    "test:e2e:open": "cypress open",
+    "test:e2e": "cypress run --config-file=cypress.config.js"
+  },
+  "devDependencies": {
+    "cypress": "^11.1.0",
+    "eslint": "8.27.0",
+    "eslint-config-next": "13.0.3",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1"
   }
 }
